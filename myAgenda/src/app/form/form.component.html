@@ -1,0 +1,80 @@
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title>Add a contact</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <form>
+            <div>
+                <mat-form-field class="inputClass">
+                    <mat-label>Name</mat-label>
+                    <input matInput minlength="3" [(ngModel)]="contact.name" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+                <mat-form-field class="inputClass">
+                    <mat-label>Surname/s</mat-label>
+                    <input matInput minlength="3" [(ngModel)]="contact.surname" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="inputClass">
+                    <mat-label>ID</mat-label>
+                    <input matInput maxlength="9" minlength="9"[(ngModel)]="contact.id" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="inputClass">
+                    <mat-label>Age</mat-label>
+                    <input matInput [(ngModel)]="contact.age" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+                <mat-form-field class="inputClass">
+                    <mat-label>Birthday</mat-label>
+                    <input matInput [matDatepicker]="picker" matInput [(ngModel)]="contact.birthday" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker ></mat-datepicker>
+                  </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="inputClass">
+                  <mat-label>Favorite color</mat-label>
+                  <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="contact.color" >
+                    <mat-option>None</mat-option>
+                    <ng-container *ngFor="let favCol of colors">
+                      <mat-option value="{{favCol.value}}">{{favCol.value}}</mat-option>
+                    </ng-container>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="inputClass">
+                  <mat-label>Gender</mat-label>
+                  <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="contact.gender" >
+                    <ng-container *ngFor="let gender of genders">
+                      <mat-option value="{{gender.value}}">{{gender.value}}</mat-option>
+                    </ng-container>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions class="cardButton">
+        <button mat-raised-button color="primary" type="submit" (click)="addContact()">SAVE</button>
+    </mat-card-actions>
+</mat-card>
+
+<div class="contacts">
+    <mat-card class="card-contact" *ngFor="let contacts of contactList; let i = index">
+        <mat-card-header>
+            <mat-card-title>{{contacts.name}} {{contacts.surname}}</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <p><strong>{{contacts.gender}}</strong></p>
+            <p><strong>ID: </strong>{{contacts.id}}</p>
+            <p><strong>Birthday: </strong>{{contacts.birthday}} (Age: {{contacts.age}})</p>
+            <p><strong>Favorite color: </strong>{{contacts.color}}</p>
+        </mat-card-content>
+        <mat-card-actions class="cardButton">
+            <button mat-raised-button color="basic" (click)="delete(i)">DELETE</button>
+            <button mat-raised-button color="primary" (click)="edit(i)">EDIT</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
